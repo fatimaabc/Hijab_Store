@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Chiffon Collection</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <script>
+    function toggleCart() {
+      const cartMenu = document.getElementById("cartMenu");
+      cartMenu.classList.toggle("hidden");
+      displayCartItems();
+    }
+
+    function addToCart(name, price) {
+      const item = { name, price };
+      let cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+      cartItems.push(item);
+      localStorage.setItem("cartItems", JSON.stringify(cartItems));
+      alert("Item added to cart!");
+    }
+
+    function displayCartItems() {
+      const cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+      const cartList = document.getElementById("cartItems");
+      const cartTotal = document.getElementById("cartTotal");
+      cartList.innerHTML = "";
+      let total = 0;
+      cartItems.forEach((item, index) => {
+        total += Number(item.price);
+        cartList.innerHTML += `
+          <li class="flex justify-between items-center py-1">
+            <span>${item.name}</span>
+            <button onclick="removeFromCart(${index})" class="text-red-500 text-sm">Remove</button>
+          </li>
+        `;
+      });
+      cartTotal.innerText = "Total: PKR " + total;
+    }
+
+    function removeFromCart(index) {
+      let cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+      cartItems.splice(index, 1);
+      localStorage.setItem("cartItems", JSON.stringify(cartItems));
+      displayCartItems();
+    }
+
+    window.onload = displayCartItems;
+  </script>
+</head>
+<body class="bg-pink-50 text-gray-900 font-sans">
+
+  <!-- Navbar -->
+  <div class="flex items-center justify-between p-4 bg-pink-200 shadow-lg">
+    <div class="flex items-center space-x-4">
+      <a href="index.html" class="text-pink-700 font-semibold">Home</a>
+      <span class="text-pink-900 font-bold">Chiffon Collection</span>
+    </div>
+
+    <button onclick="toggleCart()" class="text-pink-700 font-semibold px-4 py-2 border border-pink-700 rounded hover:bg-pink-100">
+      🛒 Cart
+    </button>
+  </div>
+
+  <!-- Cart Box -->
+  <div id="cartMenu" class="absolute top-16 right-4 w-64 bg-white border border-pink-300 rounded-lg shadow-lg hidden z-10">
+    <ul id="cartItems" class="py-4 px-4"></ul>
+    <p id="cartTotal" class="px-4 py-2 text-pink-700 font-semibold">Total: PKR 0</p>
+  </div>
+
+  <!-- Chiffon Hijab Products -->
+  <main class="p-6">
+    <h1 class="text-3xl font-bold text-pink-700 mb-6 text-center">Chiffon Hijabs</h1>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+
+      <!-- Item 1 -->
+      <div class="bg-white p-4 rounded-xl shadow text-center">
+        <img src="Chiffon/peach (1).jpg" alt="Peach Chiffon" class="w-full h-64 object-cover rounded mb-2">
+        <h2 class="text-lg font-semibold text-pink-700">Peach Chiffon Hijab</h2>
+        <p class="text-sm mb-2">Price: PKR 600</p>
+        <button onclick="addToCart('Peach Chiffon Hijab', 600)" class="bg-pink-600 text-white px-4 py-2 rounded hover:bg-pink-700">Add to Cart</button>
+      </div>
+
+      <!-- Item 2 -->
+      <div class="bg-white p-4 rounded-xl shadow text-center">
+        <img src="Chiffon/Lilac (1).jpg" alt="Black Chiffon" class="w-full h-64 object-cover rounded mb-2">
+        <h2 class="text-lg font-semibold text-pink-700">Lilac Chiffon Hijab</h2>
+        <p class="text-sm mb-2">Price: PKR 650</p>
+        <button onclick="addToCart('Black Chiffon Hijab', 650)" class="bg-pink-600 text-white px-4 py-2 rounded hover:bg-pink-700">Add to Cart</button>
+      </div>
+
+      <!-- Item 3 -->
+      <div class="bg-white p-4 rounded-xl shadow text-center">
+        <img src="Chiffon/mint green (1).jpg" alt="White Chiffon" class="w-full h-64 object-cover rounded mb-2">
+        <h2 class="text-lg font-semibold text-pink-700">Mint Green Chiffon Hijab</h2>
+        <p class="text-sm mb-2">Price: PKR 620</p>
+        <button onclick="addToCart('White Chiffon Hijab', 620)" class="bg-pink-600 text-white px-4 py-2 rounded hover:bg-pink-700">Add to Cart</button>
+      </div>
+
+       <div class="bg-white p-4 rounded-xl shadow text-center">
+        <img src="Chiffon/Rose Pink.jpg" alt="White Chiffon" class="w-full h-64 object-cover rounded mb-2">
+        <h2 class="text-lg font-semibold text-pink-700">Rose Pink Chiffon Hijab</h2>
+        <p class="text-sm mb-2">Price: PKR 620</p>
+        <button onclick="addToCart('White Chiffon Hijab', 620)" class="bg-pink-600 text-white px-4 py-2 rounded hover:bg-pink-700">Add to Cart</button>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="text-center py-6 mt-10 text-pink-700">
+    <p>Follow us on 
+      <a href="#" class="underline text-pink-800">Instagram</a> or 
+      <a href="#" class="underline text-pink-800">WhatsApp</a>
+    </p>
+  </footer>
+
+</body>
+</html>

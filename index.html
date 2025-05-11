@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Hijab Store</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  <script>
+    function toggleMenu() {
+      document.getElementById("navMenu").classList.toggle("hidden");
+    }
+
+    function toggleCart() {
+      document.getElementById("cartMenu").classList.toggle("hidden");
+    }
+
+    function displayCartItems() {
+      const cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+      const cartList = document.getElementById("cartItems");
+      const cartTotal = document.getElementById("cartTotal");
+      cartList.innerHTML = "";
+
+      let total = 0;
+      cartItems.forEach((item, index) => {
+        const li = document.createElement("li");
+        li.className = "flex justify-between items-center mb-2";
+        li.innerHTML = `
+          <span>${item.name} - PKR ${item.price}</span>
+          <button onclick="removeItem(${index})" class="text-red-500 ml-2">❌</button>
+        `;
+        total += parseInt(item.price);
+        cartList.appendChild(li);
+      });
+
+      cartTotal.innerText = "Total: PKR " + total;
+    }
+
+    function removeItem(index) {
+      let cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+      cartItems.splice(index, 1);
+      localStorage.setItem("cartItems", JSON.stringify(cartItems));
+      displayCartItems();
+    }
+
+    window.onload = displayCartItems;
+  </script>
+</head>
+<body class="bg-pink-50 text-gray-900 font-sans">
+
+  <!-- Navigation Bar -->
+  <nav class="bg-pink-200 p-4 shadow-lg flex items-center justify-between flex-wrap">
+    <!-- Logo and Toggle -->
+    <div class="flex items-center space-x-4">
+      <button class="text-pink-700 font-semibold" onclick="location.href='index.html'">Home</button>
+      <button onclick="toggleMenu()" class="text-pink-700 font-semibold sm:hidden">Menu &#x25BC;</button>
+    </div>
+
+    <!-- Cart Button -->
+    <div class="mt-2 sm:mt-0">
+      <button onclick="toggleCart()" class="text-pink-700 font-semibold px-4 py-2 border border-pink-700 rounded hover:bg-pink-100">
+        🛒 Cart
+      </button>
+    </div>
+
+    <!-- Menu for larger screens -->
+    <div class="hidden sm:flex space-x-4 mt-4 sm:mt-0">
+      <a href="chiffon.html" class="text-pink-700 hover:underline">Chiffon</a>
+      <a href="jersey.html" class="text-pink-700 hover:underline">Jersey</a>
+      <a href="silk.html" class="text-pink-700 hover:underline">Silk</a>
+    </div>
+  </nav>
+
+  <!-- Dropdown Menu (Mobile) -->
+  <div id="navMenu" class="hidden sm:hidden bg-white p-4 shadow-lg">
+    <a href="index.html" class="block py-2 text-pink-700 hover:bg-pink-100">Home</a>
+    <a href="chiffon.html" class="block py-2 text-pink-700 hover:bg-pink-100">Chiffon</a>
+    <a href="jersey.html" class="block py-2 text-pink-700 hover:bg-pink-100">Jersey</a>
+    <a href="silk.html" class="block py-2 text-pink-700 hover:bg-pink-100">Silk</a>
+  </div>
+
+  <!-- Cart Section -->
+  <div id="cartMenu" class="absolute top-20 right-4 w-72 bg-white border border-pink-300 rounded-lg shadow-lg hidden z-30">
+    <ul id="cartItems" class="py-4 px-4 text-sm max-h-60 overflow-y-auto"></ul>
+    <p id="cartTotal" class="px-4 py-2 text-pink-700 font-semibold">Total: PKR 0</p>
+  </div>
+
+  <!-- Header / Banner -->
+  <header class="bg-pink-200 p-6 text-center shadow">
+    <h1 class="text-3xl sm:text-4xl font-bold text-pink-900">Welcome to Our Hijab Store</h1>
+    <p class="mt-2 text-base sm:text-lg text-pink-700">Elegant, Affordable, Comfortable</p>
+  </header>
+
+  <!-- Collection Section -->
+  <main class="p-4 sm:p-8">
+    <h2 class="text-xl sm:text-2xl font-semibold text-pink-700 mb-8 text-center">Explore Our Collections</h2>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+      <!-- Chiffon -->
+      <div class="bg-white rounded-xl shadow-md p-4 text-center">
+        <img src="Chiffon/Chiffon.jpg" class="w-full h-48 sm:h-64 object-cover rounded-lg mb-2" alt="Peach Chiffon Hijab">
+        <p class="text-lg font-medium text-pink-700">Chiffon Collection</p>
+        <a href="chiffon.html" class="bg-pink-600 text-white py-2 px-4 rounded-full mt-4 inline-block hover:bg-pink-700">Shop Chiffon</a>
+      </div>
+
+      <!-- Silk -->
+      <div class="bg-white rounded-xl shadow-md p-4 text-center">
+        <img src="Silk/Silk.jpg" class="w-full h-48 sm:h-64 object-cover rounded-lg mb-2" alt="Baby Pink Silk Hijab">
+        <p class="text-lg font-medium text-pink-700">Silk Collection</p>
+        <a href="silk.html" class="bg-pink-600 text-white py-2 px-4 rounded-full mt-4 inline-block hover:bg-pink-700">Shop Silk</a>
+      </div>
+
+      <!-- Jersey -->
+      <div class="bg-white rounded-xl shadow-md p-4 text-center">
+        <img src="Jersey/Jersey.jpg" class="w-full h-48 sm:h-64 object-cover rounded-lg mb-2" alt="Black Jersey Hijab">
+        <p class="text-lg font-medium text-pink-700">Jersey Collection</p>
+        <a href="jersey.html" class="bg-pink-600 text-white py-2 px-4 rounded-full mt-4 inline-block hover:bg-pink-700">Shop Jersey</a>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="text-center py-6 mt-10 text-pink-700">
+    <p>Follow us on 
+      <a href="#" class="underline text-pink-800">Instagram</a> or 
+      <a href="#" class="underline text-pink-800">WhatsApp</a>
+    </p>
+  </footer>
+
+</body>
+</html>
